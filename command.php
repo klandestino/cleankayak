@@ -10,6 +10,6 @@ if ( ! class_exists( 'WP_CLI' ) ) {
  * @when before_wp_load
  */
 $hello_world_command = function() {
-	WP_CLI::success( "Hello world." );
+	WP_CLI::success( "Clean kayak." );
 };
-WP_CLI::add_command( 'hello-world', $hello_world_command );
+WP_CLI::add_command( 'clean-kayak', $hello_world_command );
