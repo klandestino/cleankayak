@@ -31,7 +31,7 @@ function email_has_active_subscription( $email ) {
 		$xml = simplexml_load_string($response->GetCusByEmailResult->any);
 		if($xml->NewDataSet->CUSTOMER){
 			foreach ( $xml->NewDataSet->CUSTOMER as $customer){
-				if ( Kayak_Subscriber_Manager::has_active_subscription( $customer->CUSNO ) ) {
+				if ( has_active_subscription( $customer->CUSNO ) ) {
 					return true;
 				}
 			}
@@ -39,6 +39,40 @@ function email_has_active_subscription( $email ) {
 	} catch (SoapFault $soapFault) {
 		var_dump($soapFault);
 	}
+	return false;
+}
+
+
+function has_active_subscription( $cusno ) {
+
+	// Pupulate SOAP arguments
+	$args = array(
+		'lCusno' => $cusno,
+		'sSource' => 'CRX',
+		'dteLimitDate' => date('Y-m-d'),
+		'sSubsno' => '',
+		'sExtno' => ''
+	);
+
+	// Create SoapClient
+
+	try {
+		$client = new SoapClient('http://91.209.29.10:8080/KayakWebServiceARB/KayakWebService.asmx?WSDL', array('trace' => 1));
+		$response = $client->GetSubscriptions_CII($args);
+		$xml = simplexml_load_string($response->GetSubscriptions_CIIResult->any);
+		if($xml->NewDataSet->Table){
+			foreach ( $xml->NewDataSet->Table as $table){
+				error_log(($table->SUBSSTATE == '01'));
+				error_log( ( strtotime($table->SUBSSTARTDATE) <= strtotime('now') ) );
+				error_log( ( strtotime($table->SUBSENDDATE) >= strtotime('now') ) );
+				if( $table->SUBSSTATE == '01' && strtotime($table->SUBSSTARTDATE) <= strtotime('now') && strtotime($table->SUBSENDDATE) >= strtotime('now') ){
+					return true;
+				}
+			}
+		}
+	} catch (SoapFault $soapFault) {
+	}
+
 	return false;
 }
 
