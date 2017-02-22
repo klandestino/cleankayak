@@ -16,7 +16,11 @@ $clean_kayak_command = function() {
 	foreach ( $users as $user ) {
 		WP_CLI::log( "Användare med mail: {$user->user_email}" );
 		$isactive = email_has_active_subscription( $user->user_email );
-		WP_CLI::log( "Är aktiv: $isactive}" );
+		if ( $isactive ) {
+			WP_CLI::log( "Är aktiv!" );
+		} else {
+			WP_CLI::log( "Är inaktiv!" );
+		}
 	}
 };
 
