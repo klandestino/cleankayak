@@ -17,11 +17,9 @@ $clean_kayak_command = function() {
 		WP_CLI::log( "Användare med mail: {$user->user_email}" );
 		$isactive = email_has_active_subscription( $user->user_email );
 		if ( $isactive ) {
-			WP_CLI::log( "Är aktiv!" );
+			WP_CLI::success( "Prenumerationen är aktiv!" );
 		} else {
-			$response = WP_CLI::runcommand( 'user delete ' . $user->ID . ' --reassign=1 --yes', array() );
-			var_dump($response);
-			//WP_CLI::log( "Tar bort inaktiv!" );
+			WP_CLI::runcommand( 'user delete ' . $user->ID . ' --reassign=1 --yes', array() );
 		}
 	}
 };
