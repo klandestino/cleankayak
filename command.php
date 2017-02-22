@@ -1,6 +1,6 @@
 <?php
 
-if ( ! class_exists( 'WP_CLI' ) || ! class_exists( 'Kayak_Subscriber_Manager' ) ) {
+if ( ! class_exists( 'WP_CLI' ) ) {
 	return;
 }
 
