@@ -19,7 +19,7 @@ $clean_kayak_command = function() {
 		if ( $isactive ) {
 			WP_CLI::log( "Är aktiv!" );
 		} else {
-			WP_CLI::launch_self( 'wp user delete '.$user->ID.' --yes' );
+			$response = WP_CLI::launch_self( 'wp user delete '.$user->ID.' --yes' );
 			WP_CLI::log( "Tar bort inaktiv!" );
 		}
 	}
