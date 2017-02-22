@@ -19,7 +19,7 @@ $clean_kayak_command = function() {
 		if ( $isactive ) {
 			WP_CLI::log( "Är aktiv!" );
 		} else {
-			$response = WP_CLI::runcommand( 'user delete ' . $user->ID, array() . '--reassign=1 --yes' );
+			$response = WP_CLI::runcommand( 'user delete ' . $user->ID . '--reassign=1 --yes', array() );
 			var_dump($response);
 			//WP_CLI::log( "Tar bort inaktiv!" );
 		}
@@ -30,7 +30,7 @@ function email_has_active_subscription( $email ) {
 	try {
 		$client = new SoapClient('http://91.209.29.10:8080/KayakWebServiceARB/KayakWebService.asmx?WSDL', array('trace' => 1));
 		$args = array(
-			'sEmail' => $email . ' --yes'
+			'sEmail' => $email
 		);
 		$response = $client->GetCusByEmail($args);
 		
