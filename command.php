@@ -61,9 +61,6 @@ function has_active_subscription( $cusno ) {
 		$xml = simplexml_load_string($response->GetSubscriptions_CIIResult->any);
 		if($xml->NewDataSet->Table){
 			foreach ( $xml->NewDataSet->Table as $table){
-				error_log(($table->SUBSSTATE == '01'));
-				error_log( ( strtotime($table->SUBSSTARTDATE) <= strtotime('now') ) );
-				error_log( ( strtotime($table->SUBSENDDATE) >= strtotime('now') ) );
 				if( $table->SUBSSTATE == '01' && strtotime($table->SUBSSTARTDATE) <= strtotime('now') && strtotime($table->SUBSENDDATE) >= strtotime('now') ){
 					return true;
 				}
