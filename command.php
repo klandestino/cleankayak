@@ -19,8 +19,7 @@ $clean_kayak_command = function() {
 		if ( $isactive ) {
 			WP_CLI::success( "Prenumerationen är aktiv!" );
 		} else {
-			WP_CLI::success( "Borde tas bort " . $user->user_email );
-			//WP_CLI::runcommand( 'user delete ' . $user->ID . ' --reassign=1 --yes', array() );
+			WP_CLI::runcommand( 'user delete ' . $user->ID . ' --reassign=1 --yes', array() );
 		}
 	}
 };
